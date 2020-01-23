@@ -46,8 +46,15 @@ public class UserProfilePageTests extends TestBase {
     @Test
     public void initialsVerification(){
         String initials = userProfile.getInitialsFromInitialsField();
+        Assert.assertTrue(userProfile.verifyIfInitialsDisplayedCorrectly(initials),
+                "Not all elements contains correct initials. It should be two elements");
+    }
 
-        Assert.assertTrue(userProfile.verifyIfInitialsDisplayedCorrectly(initials), "Not all elements contains correct initials. It should be two elements");
-
+    @Test
+    public void profileChangingVerification() throws InterruptedException {
+        userProfile.changeInitials("V.V.");
+//        userProfile.changeUserName("lanaioffe");
+//        userProfile.changeBio("some text");
+        userProfile.saveProfile();
     }
 }

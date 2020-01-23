@@ -13,6 +13,9 @@ public class UserProfilePageHelper extends PageBase {
     @FindBy(xpath = "//div[@title='lanaioffe (lanaioffe2)']/span")
     List <WebElement> listInitialsToVerify;
 
+    @FindBy(xpath = "//button[contains(text(),'Save')]")
+    WebElement saveButton;
+
     public UserProfilePageHelper(WebDriver driver) {
         super(driver);
     }
@@ -33,5 +36,14 @@ public class UserProfilePageHelper extends PageBase {
         if (listInitialsToVerify.get(0).getText().equals(initials)) counter++;
         if (listInitialsToVerify.get(1).getText().equals(initials)) counter++;
         return counter == 3;
+    }
+
+    public void changeInitials(String value) throws InterruptedException {
+        enterValueToTheField(initialsField, value);
+        Thread.sleep(10000);
+    }
+
+    public void saveProfile() {
+        saveButton.click();
     }
 }

@@ -9,6 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.selenium.pages.*;
+import ru.stqa.selenium.util.DataProviders;
 
 
 import java.util.List;
@@ -61,6 +62,7 @@ public class CurrentBoardPageTests extends TestBase{
             }
         }
 
+
         int quantityListAtFirst = qa4AutoBoard.getQuantityLists();
         qa4AutoBoard.createNewList(nameList);
         int quantityListAtTheEnd = qa4AutoBoard.getQuantityLists();
@@ -99,6 +101,19 @@ public class CurrentBoardPageTests extends TestBase{
 //        Assert.assertEquals(driver.findElement(By.cssSelector("span.placeholder")).getText(),"Add another list");
 
     }
+
+    @Test (dataProviderClass = DataProviders.class, dataProvider = "createListRandomName")
+    public void createNewListRandomName(String nameList)  {
+        boardsPage.openBoard("QA 4 Auto");
+        qa4AutoBoard.waitUntilPageIsLoaded();
+//        String nameList = "New List";
+        int quantityListAtFirst = qa4AutoBoard.getQuantityLists();
+        qa4AutoBoard.createNewList(nameList);
+        int quantityListAtTheEnd = qa4AutoBoard.getQuantityLists();
+        Assert.assertEquals(quantityListAtFirst+1,quantityListAtTheEnd);
+        Assert.assertEquals(qa4AutoBoard.getAddButtonName(),"Add another list");
+    }
+
     @Test
     public void deleteList(){
         //----Open 'QA 4 Auto' board
@@ -167,6 +182,18 @@ public class CurrentBoardPageTests extends TestBase{
         //--------Get quantity of 'Add another card' buttons at the end----
         int quantityAddAnotherButtonEnd = qa4AutoBoard.getQuantityAddAnotherCard();
 
+        Assert.assertEquals(quantityAddAnotherButtonBeg+1, quantityAddAnotherButtonEnd);
+    }
+
+    @Test (dataProviderClass = DataProviders.class, dataProvider = "createCardRandomName")
+    public void addFirstCardRandomNameInNewList(String cardName)  {
+        boardsPage.openBoard("QA 4 Auto");
+        qa4AutoBoard.waitUntilPageIsLoaded();
+        int quantityAddAnotherButtonBeg = qa4AutoBoard.getQuantityAddAnotherCard();
+        qa4AutoBoard.createNewList("New List");
+        qa4AutoBoard.waitUntilPageIsLoaded();
+        qa4AutoBoard.addFirstCardForNewList(cardName);
+        int quantityAddAnotherButtonEnd = qa4AutoBoard.getQuantityAddAnotherCard();
         Assert.assertEquals(quantityAddAnotherButtonBeg+1, quantityAddAnotherButtonEnd);
     }
 

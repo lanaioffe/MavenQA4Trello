@@ -110,6 +110,10 @@ public class LoginPageHelper extends PageBase{
         return loginErrorMessage.getText().contains("There isn't an account for this email");
     }
 
+    public String getLoginError (){
+        return loginErrorMessage.getText();
+    }
+
 
 
 }

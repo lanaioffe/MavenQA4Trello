@@ -3,10 +3,12 @@ package ru.stqa.selenium;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.selenium.pages.BoardsPageHelper;
 import ru.stqa.selenium.pages.HomePageHelper;
 import ru.stqa.selenium.pages.LoginPageHelper;
+import ru.stqa.selenium.util.DataProviders;
 
 
 public class LoginPageTests extends TestBase {
@@ -35,26 +37,36 @@ public class LoginPageTests extends TestBase {
     }
 
 
-    @Test
-    public void loginIncorrectPassNegative()  {
+    @Test(dataProviderClass = DataProviders.class, dataProvider = "dataProviderFirstPsw")
+    public void loginIncorrectPassNegative(String login, String psw, String message)  {
         homePage.openLoginPage();
         loginPage.waitUntilPageIsLoaded();
-        loginPage.loginToTrelloAsAtlassian(LOGIN, PASSWORD + "1")
-                .waitUntilPasswordError();
-
+//        loginPage.loginToTrelloAsAtlassian(LOGIN, PASSWORD + "1");
+        loginPage.loginToTrelloAsAtlassian(login, psw);
+        loginPage.waitUntilPasswordError();
         Assert.assertTrue(loginPage.verifyIfPasswordErrorIsCorrect(), "Error message is not correct");
-
     }
 
-    @Test
-    public void loginIncorrectLoginNegative() {
+    @Test(dataProviderClass = DataProviders.class, dataProvider = "dataProviderFirst")
+    public void loginIncorrectLoginNegative(String login, String psw, String message) {
         homePage.openLoginPage();
         loginPage.waitUntilPageIsLoaded();
 //        loginPage.loginToTrello(LOGIN + "1", PASSWORD);
-        loginPage.loginToTrello("abc@mai.com", "hjdhj")
-                .waitUntilLoginError();
-        Assert.assertTrue(loginPage.verifyIfLoginErrorIsCorrect(), "Error login message is not correct");
+//        loginPage.loginToTrello("abc@mai.com", "hjdhj");
+        loginPage.loginToTrello(login, psw);
+        loginPage.waitUntilLoginError();
+//        Assert.assertTrue(loginPage.verifyIfLoginErrorIsCorrect(), "Error login message is not correct");
+        Assert.assertEquals(message, loginPage.getLoginError());
     }
 
+    @Test(dataProviderClass = DataProviders.class, dataProvider = "dataProviderSecond")
+    public void loginIncorrectLoginNegative2(String login, String psw) {
+        homePage.openLoginPage();
+        loginPage.waitUntilPageIsLoaded();
+        loginPage.loginToTrello(login, psw);
+        loginPage.waitUntilLoginError();
+        Assert.assertEquals("There isn't an account for this email", loginPage.getLoginError());
+
+    }
 
 }
