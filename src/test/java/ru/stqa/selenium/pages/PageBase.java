@@ -1,16 +1,18 @@
 package ru.stqa.selenium.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.stqa.selenium.util.LogLog4j;
 
 import java.util.List;
 import java.util.Random;
 
 public abstract class PageBase {
-
+    public static LogLog4j log = new LogLog4j();
     WebDriver driver;
 
     public PageBase (WebDriver driver){
@@ -46,6 +48,16 @@ public abstract class PageBase {
     public void waitUntilElementIsVisible(WebElement element, int time) {
         try {
             new WebDriverWait(driver,time).until(ExpectedConditions.visibilityOf(element));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void waitUntilTextToBeInElement(WebElement element, String text, int time) {
+        try {
+            new WebDriverWait(driver,time).until(ExpectedConditions
+                    .textToBePresentInElement(element,text));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -88,6 +100,13 @@ public abstract class PageBase {
     public void enterValueToTheField(WebElement field, String value) {
         field.click();
         field.clear();
+        field.sendKeys(value);
+    }
+
+    public void enterValueToAutoCompleteField(WebElement field, String value){
+        field.click();
+        JavascriptExecutor jse = (JavascriptExecutor)driver;
+        jse.executeScript("arguments[0].value='';", field);
         field.sendKeys(value);
     }
 }

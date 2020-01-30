@@ -19,19 +19,28 @@ public class BoardsPageHelper extends PageBase {
 
     @Override
     public void waitUntilPageIsLoaded() {
+        log.info("Start: method waitUntilPageIsLoaded(), class BoardsPageHelper");
+        log.info("Wait until Boards icon is clickable");
         waitUntilElementIsClickable(boardsIcon,30);
     }
 
     public boolean verifyIfBoardsIconIsDisplayed(){
+        log.info("Start: method verifyIfBoardsIconIsDisplayed()");
+        log.info("Verify that Boards icon is displayed on the screen");
         return boardsIcon.isDisplayed();
     }
 
     public boolean verifyIfPersonalBoardsHeaderIsDisplayed(){
+        log.info("Start: method verifyIfPersonalBoardsHeaderIsDisplayed()");
+        log.info("Verify that text of the element personal boards is 'Personal Boards'");
         return personalBoardsHeader.getText().equals("Personal Boards");
     }
 
     public void openBoard (String boardName){
+        log.startTestCase("openBoard");
+        log.info("Wait until element " + boardName + " is visible");
         waitUntilElementIsVisible(By.xpath("//div[@title='" + boardName + "']/.."),20);
+        log.info("Open board " + boardName);
         driver.findElement(By.xpath("//div[@title='" + boardName + "']/..")).click();
     }
 }

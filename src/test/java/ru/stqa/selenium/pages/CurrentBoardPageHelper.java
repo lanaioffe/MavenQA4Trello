@@ -68,10 +68,14 @@ WebElement submitAddListButton;
 
     @Override
     public void waitUntilPageIsLoaded() {
+        log.startTestCase("waitUntilPageIsLoaded, class CurrentBoardPageHelper");
+        log.info("Wait until element is clickable");
         waitUntilElementIsClickable(addListButton,30);
     }
 
     public boolean titleVerification(){
+        log.startTestCase("titleVerification, class CurrentBoardPageHelper");
+        log.verify("CurrentBoardName equals name");
         return currentBoardName.getText().equals(name);
     }
 

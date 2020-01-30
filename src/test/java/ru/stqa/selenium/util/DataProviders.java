@@ -32,6 +32,7 @@ public class DataProviders {
         return userData.iterator();
     }
 
+
     @DataProvider
     public static Iterator<Object[]> dataProviderFirstPsw() throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(
@@ -49,11 +50,25 @@ public class DataProviders {
     }
 
     @DataProvider
+    public static Iterator<Object[]> profileChanging() throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(DataProviders.class.getResourceAsStream("/profileChanging.data")));
+
+        List<Object[]> userData = new ArrayList<Object[]>();
+        String line = in.readLine();
+        while (line != null) {
+            userData.add(line.split(";"));
+            line = in.readLine();
+        }
+        in.close();
+        return userData.iterator();
+    }
+
+    @DataProvider
     public static Iterator<Object[]> dataProviderSecond() {
         List<Object[]> data = new ArrayList();
-        data.add(new Object[]{"login1@mail.ru", "psw1"});
-        data.add(new Object[]{"login2@mail.ru", "psw2"});
-        data.add(new Object[]{"login3@test.ru", "psw3"});
+        data.add(new Object[]{"login1@mail.ru", "psw1", "There isn't an account for this email"});
+        data.add(new Object[]{"login2@mail.ru", "psw2", "There isn't an account for this email"});
+        data.add(new Object[]{"login3@test.ru", "psw3", "There isn't an account for this email"});
 
         return data.iterator();
     }

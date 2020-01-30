@@ -33,12 +33,14 @@ public class LoginPageHelper extends PageBase{
     }
 
     public void waitUntilPageIsLoaded(){
+        log.info("Start: method waitUntilPageIsLoaded(), class LoginPageHelper");
+        log.info("Wait until login button is clickable");
         waitUntilElementIsClickable(loginButton,30);
     }
 
-    public void  enterAtlLogin(String login) {
+    public LoginPageHelper  enterAtlLogin(String login) {
         enterValueToTheField(userField, login);
-
+        return this;
     }
 
     public void clickLoginWithAtlassian() {
@@ -59,19 +61,28 @@ public class LoginPageHelper extends PageBase{
     }
 
     public LoginPageHelper loginToTrelloAsAtlassian(String login, String password){
+        log.info("Start: method loginToTrelloAsAtlassian(" + login + "," + password + ")");
+        log.info("Enter login - " + login);
         this.enterAtlLogin(login);
+        log.info("Click on 'Login with Atlassian' button");
         this.clickLoginWithAtlassian();
+        log.info("Click on 'Continue' button");
         this.clickContinueButton();
+        log.info("Enter password - " + password);
         this.enterAtlPasswordAndLogin(password);
         return this;
     }
 
     public LoginPageHelper waitUntilPasswordError() {
+        log.info("Start: method waitUntilPasswordError()");
+        log.info("Wait until error message is displayed");
         waitUntilElementIsVisible(passwordErrorMessage,10);
         return this;
     }
 
     public boolean verifyIfPasswordErrorIsCorrect(){
+        log.info("Start: method verifyIfPasswordErrorIsCorrect()");
+        log.info("Verify if password error is correct");
         return passwordErrorMessage.getText().contains("Incorrect email address and / or password.");
     }
 
@@ -93,16 +104,22 @@ public class LoginPageHelper extends PageBase{
     }
 
     public LoginPageHelper loginToTrello (String login, String password){
+        log.info("Start: method loginToTrello(" + login + ", " + password + ")");
+        log.info("Enter login - " + login);
         this.enterLogin(login);
+        log.info("Enter password - " + password);
         this.enterPassword(password);
+        log.info("Click on login button");
         this.clickLogin();
         return this;
     }
 
     public LoginPageHelper waitUntilLoginError() {
+        log.info("Start: method waitUntilLoginError()");
         this.clickLogin();
+        log.info("Wait until error message is displayed");
         waitUntilElementIsVisible(loginErrorMessage,20);
-        System.out.println("Error text: " + loginErrorMessage.getText());
+//        System.out.println("Error text: " + loginErrorMessage.getText());
         return this;
     }
 
@@ -111,6 +128,8 @@ public class LoginPageHelper extends PageBase{
     }
 
     public String getLoginError (){
+        log.info("Start: method getLoginError");
+        log.info("Get error text - " + loginErrorMessage.getText());
         return loginErrorMessage.getText();
     }
 

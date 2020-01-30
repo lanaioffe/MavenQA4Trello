@@ -17,6 +17,8 @@ public  class HomePageHelper extends PageBase {
     }
 
     public void openLoginPage(){
+        log.info("Start: method openLoginPage");
+        log.info("Click on the login button");
         loginIcon.click();
     }
 

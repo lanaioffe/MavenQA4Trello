@@ -33,17 +33,28 @@ public class CurrentBoardPageTests extends TestBase{
         qa4AutoBoard = PageFactory.initElements(driver, CurrentBoardPageHelper.class);
         qa4AutoBoard.setName("QA 4 Auto");
 
+        log.startTestCase("initTest");
+        log.info("-- Open login page");
         homePage.openLoginPage();
+        log.info("--Wait until page is loaded");
         loginPage.waitUntilPageIsLoaded();
+        log.info("--Enter Atlassian login/password");
         loginPage.loginToTrelloAsAtlassian(LOGIN, PASSWORD);
+        log.info("--Wait until boardsPage is loaded");
         boardsPage.waitUntilPageIsLoaded();
+        log.endTestCase();
     }
 
     @Test
     public void verifyIFLoadedBoardIsCorrect() {
+        log.startTestCase("verifyIFLoadedBoardIsCorrect");
+        log.info("--Open Board: QA 4 Auto");
         boardsPage.openBoard("QA 4 Auto");
+        log.info("--Wait until page is loaded");
         qa4AutoBoard.waitUntilPageIsLoaded();
+        log.info("--Verify that opened board is correct");
         Assert.assertTrue(qa4AutoBoard.titleVerification());
+        log.endTestCase();
     }
 
     @Test

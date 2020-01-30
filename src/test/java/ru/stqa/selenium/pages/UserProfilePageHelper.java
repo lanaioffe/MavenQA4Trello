@@ -16,6 +16,12 @@ public class UserProfilePageHelper extends PageBase {
     @FindBy(xpath = "//button[contains(text(),'Save')]")
     WebElement saveButton;
 
+    @FindBy (xpath = "//input[@name='username']")
+    WebElement userName;
+
+    @FindBy (xpath = "//textarea[@class='_32NOj1SsaXIXYw']")
+    WebElement bioField;
+
     public UserProfilePageHelper(WebDriver driver) {
         super(driver);
     }
@@ -38,12 +44,40 @@ public class UserProfilePageHelper extends PageBase {
         return counter == 3;
     }
 
-    public void changeInitials(String value) throws InterruptedException {
-        enterValueToTheField(initialsField, value);
-        Thread.sleep(10000);
+//    public void changeInitials(String value) throws InterruptedException {
+//        enterValueToTheField(initialsField, value);
+//        Thread.sleep(10000);
+//    }
+
+        public UserProfilePageHelper changeInitials(String value) {
+        //enterValueToTheField(initialsField,value);
+        enterValueToAutoCompleteField(initialsField,value);
+        return this;
     }
 
-    public void saveProfile() {
+    public UserProfilePageHelper saveProfile() {
         saveButton.click();
+        /*try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+        return this;
     }
+
+    public UserProfilePageHelper changeUserName(String value) {
+        enterValueToAutoCompleteField(userName, value);
+        return this;
+    }
+
+    public UserProfilePageHelper changeBio(String value) {
+        enterValueToTheField(bioField,value);
+        return this;
+    }
+
+    public UserProfilePageHelper waitInitials(String value) {
+        waitUntilTextToBeInElement(listInitialsToVerify.get(0), value, 15);
+        return this;
+    }
+
 }

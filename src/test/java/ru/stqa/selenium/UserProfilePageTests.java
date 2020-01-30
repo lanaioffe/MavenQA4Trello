@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import ru.stqa.selenium.pages.*;
+import ru.stqa.selenium.util.DataProviders;
 
 
 import java.util.List;
@@ -50,11 +51,22 @@ public class UserProfilePageTests extends TestBase {
                 "Not all elements contains correct initials. It should be two elements");
     }
 
-    @Test
-    public void profileChangingVerification() throws InterruptedException {
-        userProfile.changeInitials("V.V.");
-//        userProfile.changeUserName("lanaioffe");
-//        userProfile.changeBio("some text");
-        userProfile.saveProfile();
+//    @Test
+//    public void profileChangingVerification() throws InterruptedException {
+//        userProfile.changeInitials("V.V.");
+////        userProfile.changeUserName("lanaioffe");
+////        userProfile.changeBio("some text");
+//        userProfile.saveProfile();
+//    }
+
+    @Test (dataProviderClass = DataProviders.class, dataProvider = "profileChanging")
+    public void profileChangingVerification(String init, String userName, String bio){
+        userProfile.changeInitials(init)
+                .changeUserName(userName)
+                .changeBio(bio)
+                .saveProfile()
+                .waitInitials(init);
+        Assert.assertTrue(userProfile.verifyIfInitialsDisplayedCorrectly(init),
+                "Not all elements contains correct initials. It should be two elements");
     }
 }
