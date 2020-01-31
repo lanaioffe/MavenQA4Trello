@@ -25,7 +25,7 @@ public class LoginPageTests extends TestBase {
     }
 
     @Test
-    public void loginToTrelloPositive()  {
+    public void loginToTrelloPositive() {
         log.startTestCase("loginToTrelloPossitive");
         log.info("-- Open login page");
         homePage.openLoginPage();

@@ -15,7 +15,8 @@ public class LoginPageHelper extends PageBase{
     @FindBy(xpath = "//button[@id='login-submit']//span[contains(text(),'Log in')]")
     WebElement theSecondLoginButton;
 
-    @FindBy(xpath = "//button[@id='login-submit']//span[contains(text(),'Continue')]")
+//    @FindBy(xpath = "//button[@id='login-submit']//span[contains(text(),'Continue')]")
+    @FindBy(xpath = "//button[@id='login-submit']//span[contains(text(),'Continue')]/../../..")
     WebElement continueButton;
 
     @FindBy(id = "password")
@@ -48,8 +49,8 @@ public class LoginPageHelper extends PageBase{
         loginButton.click();
     }
 
-    public void clickContinueButton() {
-        waitUntilElementIsClickable(continueButton,30);
+    public void clickContinueButton()  {
+        waitUntilElementIsClickable(continueButton,10);
         continueButton.click();
     }
 
@@ -60,7 +61,7 @@ public class LoginPageHelper extends PageBase{
         theSecondLoginButton.click();
     }
 
-    public LoginPageHelper loginToTrelloAsAtlassian(String login, String password){
+    public LoginPageHelper loginToTrelloAsAtlassian(String login, String password)  {
         log.info("Start: method loginToTrelloAsAtlassian(" + login + "," + password + ")");
         log.info("Enter login - " + login);
         this.enterAtlLogin(login);
