@@ -49,7 +49,7 @@ public class UserProfilePageHelper extends PageBase {
 //        Thread.sleep(10000);
 //    }
 
-        public UserProfilePageHelper changeInitials(String value) {
+    public UserProfilePageHelper changeInitials(String value) {
         //enterValueToTheField(initialsField,value);
         enterValueToAutoCompleteField(initialsField,value);
         return this;

@@ -55,9 +55,7 @@ public abstract class PageBase {
 
     public void waitUntilTextToBeInElement(WebElement element, String text, int time) {
         try {
-            new WebDriverWait(driver,time).until(ExpectedConditions
-                    .textToBePresentInElement(element,text));
-
+            new WebDriverWait(driver,time).until(ExpectedConditions.textToBePresentInElement(element,text));
         } catch (Exception e) {
             e.printStackTrace();
         }
